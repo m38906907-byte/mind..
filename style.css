@@ -1330,10 +1330,12 @@ div.secondary-actions {
       }
    }
 
-   #results-container {
-      grid-template-columns: 1fr;
-      padding: 0 10px;
-      margin: 60px auto 30px;
+   /* الشبكة على الجوال — كارد واحد في كل صف */
+   #results-container[style*="grid"] {
+      grid-template-columns: 1fr !important;
+      padding: 0 20px !important;
+      margin: 30px auto 50px !important;
+      gap: 24px !important;
    }
 
    .book-card { width: 100%; max-width: 100%; }
