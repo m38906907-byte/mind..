@@ -1281,6 +1281,8 @@ div.secondary-actions {
       border-bottom-right-radius: 30px;
    }
 
+   .mobile-small { font-size: 0.72rem; }
+
    h1.main-title {
       position: relative;
       top: auto;

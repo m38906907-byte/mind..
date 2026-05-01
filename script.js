@@ -1138,3 +1138,12 @@ function updateStudentNameFieldStatus() {
         injectTelegramJoinButton();
     }
 })();
+ 
+function setMobileSmall() {
+  document.querySelectorAll('.btn-order').forEach(btn => {
+    btn.classList.toggle('mobile-small', window.innerWidth <= 650);
+  });
+}
+
+setMobileSmall();
+window.addEventListener('resize', setMobileSmall);
