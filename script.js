@@ -949,8 +949,8 @@ let finalPriceWithDelivery = 0;
 function applyDiscount() {
     const citySelect = document.getElementById('userCity'); // جلب عنصر اختيار المحافظة
     const inputCodeElement = document.getElementById('discountCode'); // جلب عنصر إدخال الكود
-    const coupon = "MIND";
-   
+    const coupon = "MIND"; 
+    
     // 1. الشرط الجديد: التحقق من أن المحافظة مختارة أولاً
     if (!citySelect || citySelect.value === "") {
         alert("⚠️ يرجى اختيار المحافظة أولاً قبل محاولة تفعيل كود الخصم!");
@@ -1022,11 +1022,14 @@ function sendOrder(platform) {
     }
 
     // 5. تحديد السعر النهائي
-    let originalTotal = document.getElementById('totalPrice') ? document.getElementById('totalPrice').innerText.replace(/[^0-9]/g, '') : "0";
+    let originalTotal = document.getElementById('totalPrice') ? (document.getElementById('totalPrice').innerText.replace(/[^0-9]/g, '') || "0") : "0";
     let isDiscountVisible = document.getElementById('discountRow') && document.getElementById('discountRow').style.display === 'flex';
-    let priceToMessage = (isDiscountVisible && typeof finalPriceWithDelivery !== 'undefined' && finalPriceWithDelivery > 0) 
-                     ? finalPriceWithDelivery 
-                     : originalTotal;
+    let rawPrice = (isDiscountVisible && typeof finalPriceWithDelivery !== 'undefined' && finalPriceWithDelivery > 0) 
+               ? finalPriceWithDelivery 
+               : originalTotal;
+
+// التأكد من أن السعر رقمي وليس فارغاً أو NaN
+let priceToMessage = (!rawPrice || isNaN(rawPrice)) ? "0" : rawPrice;
 
 // إضافة فاصلة بين كل 3 أرقام
 priceToMessage = parseInt(priceToMessage).toLocaleString('en-US');
