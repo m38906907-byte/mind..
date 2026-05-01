@@ -949,7 +949,7 @@ let finalPriceWithDelivery = 0;
 function applyDiscount() {
     const citySelect = document.getElementById('userCity'); // جلب عنصر اختيار المحافظة
     const inputCodeElement = document.getElementById('discountCode'); // جلب عنصر إدخال الكود
-    const coupon = "MIND"; 
+    const coupon = "رفل الزبيدي"; 
     
     // 1. الشرط الجديد: التحقق من أن المحافظة مختارة أولاً
     if (!citySelect || citySelect.value === "") {
