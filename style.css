@@ -116,6 +116,12 @@ body {
    mask: linear-gradient(black, black);
 }
 
+img.icon-manasat
+{
+   width : 30px
+ ; height : 30px
+}
+
 /* لمسات إضاءة ناعمة (الزرقاء فقط) — متحركة. الذهبية ثابتة على .header-section */
 .header-section::before {
    content: '';
