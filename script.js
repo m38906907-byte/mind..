@@ -949,8 +949,8 @@ let finalPriceWithDelivery = 0;
 function applyDiscount() {
     const citySelect = document.getElementById('userCity'); // جلب عنصر اختيار المحافظة
     const inputCodeElement = document.getElementById('discountCode'); // جلب عنصر إدخال الكود
-    const coupon = "MIND"; 
-
+    const coupon = "MIND";
+   
     // 1. الشرط الجديد: التحقق من أن المحافظة مختارة أولاً
     if (!citySelect || citySelect.value === "") {
         alert("⚠️ يرجى اختيار المحافظة أولاً قبل محاولة تفعيل كود الخصم!");
@@ -1025,8 +1025,11 @@ function sendOrder(platform) {
     let originalTotal = document.getElementById('totalPrice') ? document.getElementById('totalPrice').innerText.replace(/[^0-9]/g, '') : "0";
     let isDiscountVisible = document.getElementById('discountRow') && document.getElementById('discountRow').style.display === 'flex';
     let priceToMessage = (isDiscountVisible && typeof finalPriceWithDelivery !== 'undefined' && finalPriceWithDelivery > 0) 
-                         ? finalPriceWithDelivery 
-                         : originalTotal;
+                     ? finalPriceWithDelivery 
+                     : originalTotal;
+
+// إضافة فاصلة بين كل 3 أرقام
+priceToMessage = parseInt(priceToMessage).toLocaleString('en-US');
 
     // 6. قائمة الطلبات
     let itemsList = cart.map(item => `- ${item.name}`).join('\n');
