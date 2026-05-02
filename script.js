@@ -683,7 +683,7 @@ function calculateTotal() {
     document.getElementById('subTotal').innerText = subTotal.toLocaleString() + " د.ع";
     document.getElementById('deliveryPrice').innerText = deliveryCost.toLocaleString() + " د.ع";
     document.getElementById('totalPrice').innerText = (subTotal + deliveryCost).toLocaleString() + " د.ع";
-
+    finalPriceWithDelivery = subTotal + deliveryCost;
     // إذا كان كود الخصم مفعّلاً، نعيد حساب السعر بعد الخصم تلقائياً
     if (isDiscountActive) {
         recalculateDiscountedPrice();
@@ -999,6 +999,9 @@ function applyDiscount() {
 }
 
 function sendOrder(platform) {
+
+    calculateTotal();
+
     // 1. جلب العناصر والتأكد من وجودها
     const nameEl = document.getElementById('userName');
     const phoneEl = document.getElementById('userPhone');
@@ -1042,17 +1045,15 @@ function sendOrder(platform) {
     }
 
     // 5. تحديد السعر النهائي
-    let originalTotal = document.getElementById('totalPrice') ? (document.getElementById('totalPrice').innerText.replace(/[^0-9]/g, '') || "0") : "0";
+    let subTotal = cart.reduce((sum, item) => sum + item.price, 0);
+    let cityValue = cityEl ? cityEl.value : "";
+    let delivery = cityValue === "" ? 0 : 5000; // نفس منطق التوصيل في calculateTotal
+    let computedTotal = subTotal + delivery;
     let isDiscountVisible = document.getElementById('discountRow') && document.getElementById('discountRow').style.display === 'flex';
-    let rawPrice = (isDiscountVisible && typeof finalPriceWithDelivery !== 'undefined' && finalPriceWithDelivery > 0) 
-               ? finalPriceWithDelivery 
-               : originalTotal;
-
-// التأكد من أن السعر رقمي وليس فارغاً أو NaN
-let priceToMessage = (!rawPrice || isNaN(rawPrice)) ? "0" : rawPrice;
-
-// إضافة فاصلة بين كل 3 أرقام
-priceToMessage = parseInt(priceToMessage).toLocaleString('en-US');
+    let priceToMessage = (isDiscountVisible && typeof finalPriceWithDelivery !== 'undefined' && finalPriceWithDelivery > 0)
+                         ? finalPriceWithDelivery
+                         : computedTotal;
+    priceToMessage = priceToMessage.toLocaleString('en-US');
 
     // 6. قائمة الطلبات
     let itemsList = cart.map(item => `- ${item.name}`).join('\n');
