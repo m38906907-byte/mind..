@@ -950,6 +950,7 @@ function applyDiscount() {
     const citySelect = document.getElementById('userCity'); // جلب عنصر اختيار المحافظة
     const inputCodeElement = document.getElementById('discountCode'); // جلب عنصر إدخال الكود
     const coupon = "رفل الزبيدي"; 
+    const coupon2 = "kh00"
     
     // 1. الشرط الجديد: التحقق من أن المحافظة مختارة أولاً
     if (!citySelect || citySelect.value === "") {
@@ -964,7 +965,7 @@ function applyDiscount() {
     const totalPriceElement = document.getElementById('totalPrice');
     const discountRow = document.getElementById('discountRow');
 
-    if (inputCode === coupon) {
+    if (inputCode === coupon || inputCode === coupon2 ) {
         // تفعيل الخصم وإعادة الحساب من خلال الدالة المشتركة
         isDiscountActive = true;
         recalculateDiscountedPrice();
