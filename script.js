@@ -2,6 +2,7 @@
 let cart = []; // مصفوفة فارغة لتخزين الملازم التي يضيفها المستخدم (تتكون من اسم وسعر)
 let deliveryCost = 0; // متغير لتخزين قيمة التوصيل التي تتغير حسب المحافظة
 let isDiscountActive = false; // حالة كود الخصم (مفعّل أو لا) — يُستخدم لإعادة الحساب تلقائياً
+let activeDiscountCode = ""; // الكود الخصم النشط
 
 // --- 2. دالة التحقق من البيانات (الحارس) ---
 function isDataValid() {
@@ -698,6 +699,7 @@ function recalculateDiscountedPrice() {
     // إذا فرغت السلة، نلغي الخصم تلقائياً
     if (cart.length === 0) {
         isDiscountActive = false;
+        activeDiscountCode = ""; // مسح الكود النشط
         finalPriceWithDelivery = 0;
         if (totalPriceElement) totalPriceElement.classList.remove('original-price-discounted');
         if (discountRow) discountRow.style.display = 'none';
@@ -706,14 +708,28 @@ function recalculateDiscountedPrice() {
 
     let booksOnlyTotal = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
     let totalDiscount = 0;
-    cart.forEach(item => {
-        let price = parseInt(item.price);
-        if (price < 74000) {
-            totalDiscount += 500;
-        } else {
-            totalDiscount += 2000;
-        }
-    });
+    if (activeDiscountCode === "kh00") {
+        // منطق خاص لكود kh00
+        cart.forEach(item => {
+            if (item.name.includes("خالد الحيالي") && parseInt(item.price) < 74000) {
+                totalDiscount += 1000;
+            } else if (parseInt(item.price) < 74000) {
+                totalDiscount += 500;
+            } else {
+                totalDiscount += 2000;
+            }
+        });
+    } else if (activeDiscountCode === "رفل الزبيدي") {
+        // المنطق الحالي: 500 لأقل من 74,000، 2000 لأعلى
+        cart.forEach(item => {
+            let price = parseInt(item.price);
+            if (price < 74000) {
+                totalDiscount += 500;
+            } else {
+                totalDiscount += 2000;
+            }
+        });
+    }
 
     finalPriceWithDelivery = (booksOnlyTotal - totalDiscount) + deliveryCost;
 
@@ -772,6 +788,7 @@ function clearCart() {
             // 5. تصفير المتغيرات الحسابية (مع التأكد من تعريفها)
             if (typeof deliveryCost !== 'undefined') deliveryCost = 0;
             isDiscountActive = false; // إلغاء حالة الخصم عند مسح السلة
+            activeDiscountCode = ""; // مسح الكود النشط
 
             // تصفير سعر الخصم النهائي (استخدمنا نافذة window لضمان الوصول للمتغير العالمي)
             window.finalPriceWithDelivery = 0;
@@ -968,11 +985,13 @@ function applyDiscount() {
     if (inputCode === coupon || inputCode === coupon2 ) {
         // تفعيل الخصم وإعادة الحساب من خلال الدالة المشتركة
         isDiscountActive = true;
+        activeDiscountCode = inputCode; // تخزين الكود النشط
         recalculateDiscountedPrice();
         alert("تم تفعيل الخصم بنجاح ✅");
     } else {
         alert("كود الخصم غير صحيح ❌");
         isDiscountActive = false;
+        activeDiscountCode = ""; // مسح الكود النشط
         finalPriceWithDelivery = 0;
         totalPriceElement.classList.remove('original-price-discounted');
         discountRow.style.display = 'none';
