@@ -708,28 +708,17 @@ function recalculateDiscountedPrice() {
 
     let booksOnlyTotal = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
     let totalDiscount = 0;
-    if (activeDiscountCode === "kh00") {
-        // منطق خاص لكود kh00
+    
+    if (activeDiscountCode === "Mind2027") {
+        // منطق خاص لكود Mind
         cart.forEach(item => {
-            if (item.name.includes("خالد الحيالي") && parseInt(item.price) < 74000) {
-                totalDiscount += 1000;
-            } else if (parseInt(item.price) < 74000) {
+              if (parseInt(item.price) < 74000) {
                 totalDiscount += 500;
             } else {
-                totalDiscount += 2000;
+                totalDiscount += 3000;
             }
         });
-    } else if (activeDiscountCode === "رفل الزبيدي") {
-        // المنطق الحالي: 500 لأقل من 74,000، 2000 لأعلى
-        cart.forEach(item => {
-            let price = parseInt(item.price);
-            if (price < 74000) {
-                totalDiscount += 500;
-            } else {
-                totalDiscount += 2000;
-            }
-        });
-    }
+    } 
 
     finalPriceWithDelivery = (booksOnlyTotal - totalDiscount) + deliveryCost;
 
@@ -1024,9 +1013,8 @@ let finalPriceWithDelivery = 0;
 function applyDiscount() {
     const citySelect = document.getElementById('userCity'); // جلب عنصر اختيار المحافظة
     const inputCodeElement = document.getElementById('discountCode'); // جلب عنصر إدخال الكود
-    const coupon = "رفل الزبيدي"; 
-    const coupon2 = "kh00"
-    
+    const coupon = "Mind2027"; 
+        
     // 1. الشرط الجديد: التحقق من أن المحافظة مختارة أولاً
     if (!citySelect || citySelect.value === "") {
         alert("⚠️ يرجى اختيار المحافظة أولاً قبل محاولة تفعيل كود الخصم!");
@@ -1040,7 +1028,7 @@ function applyDiscount() {
     const totalPriceElement = document.getElementById('totalPrice');
     const discountRow = document.getElementById('discountRow');
 
-    if (inputCode === coupon || inputCode === coupon2 ) {
+    if (inputCode === coupon ) {
         // تفعيل الخصم وإعادة الحساب من خلال الدالة المشتركة
         isDiscountActive = true;
         activeDiscountCode = inputCode; // تخزين الكود النشط
