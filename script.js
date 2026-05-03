@@ -812,6 +812,64 @@ function clearCart() {
     }
 }
 
+function clearCartSilent() {
+    try {
+        // 1. تفريغ مصفوفة الملازم
+        cart = [];
+
+        // تحديث الواجهة (بشرط وجود الدوال)
+        if (typeof updateCartUI === "function") updateCartUI();
+        if (typeof renderCartChips === "function") renderCartChips();
+
+        // 2. مسح حقول النصوص (استخدمنا مصفوفة لضمان عدم توقف الكود)
+        const inputIds = ['userPhone', 'userPhone2', 'userDist', 'discountCode'];
+        inputIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+
+        // 3. إعادة قائمة المحافظات
+        const citySelect = document.getElementById('userCity');
+        if (citySelect) citySelect.selectedIndex = 0;
+
+        // 4. تصفير تنسيقات الخصم والأسعار
+        const totalPriceElement = document.getElementById('totalPrice');
+        const discountRow = document.getElementById('discountRow');
+
+        if (totalPriceElement) {
+            totalPriceElement.classList.remove('original-price-discounted');
+            totalPriceElement.style.color = ""; // إرجاع اللون الأصلي
+            totalPriceElement.innerText = "0 د.ع";
+        }
+        if (discountRow) {
+            discountRow.style.display = 'none';
+        }
+
+        // 5. تصفير المتغيرات الحسابية (مع التأكد من تعريفها)
+        if (typeof deliveryCost !== 'undefined') deliveryCost = 0;
+        isDiscountActive = false; // إلغاء حالة الخصم عند مسح السلة
+        activeDiscountCode = ""; // مسح الكود النشط
+
+        // تصفير سعر الخصم النهائي (استخدمنا نافذة window لضمان الوصول للمتغير العالمي)
+        window.finalPriceWithDelivery = 0;
+
+        // 6. إغلاق النافذة (حاول بكل الدوال الممكنة)
+        if (typeof closeModal === "function") {
+            closeModal();
+        } else if (typeof closeCart === "function") {
+            closeCart();
+        }
+
+        // 7. تحديث السعر النهائي
+        if (typeof calculateTotal === "function") calculateTotal();
+
+    } catch (error) {
+        console.error("حدث خطأ أثناء مسح السلة:", error);
+        // حتى لو حدث خطأ، سنحاول إغلاق النافذة
+        if (typeof closeModal === "function") closeModal();
+    }
+}
+
 // --- 8. ميزة الإنستغرام (نسخ النص بنفس صيغة الواتساب/التلكرام) ---
 function openInstagram() {
     // 1. جلب العناصر والتأكد من وجودها (نفس التحققات الموجودة في sendOrder)
@@ -911,7 +969,7 @@ function removeSpecificItem(index) {
     updateCartUI(); // تحديث أيقونة السلة الخارجية
 
     if (cart.length === 0) {
-        closeModal(); // إغلاق النافذة إذا السلة فرغت
+        clearCartSilent(); // مسح السلة بالكامل إذا السلة فرغت
     } else {
         renderCartChips(); // تحديث القائمة في النافذة
         calculateTotal(); // تحديث المجموع النهائي
