@@ -1141,7 +1141,7 @@ function updateStudentNameFieldStatus() {
     // البحث في السلة: هل يوجد منتج واحد على الأقل سعره أكبر من أو يساوي 75000؟
     const hasPremiumProduct = cart.some(item => {
         let price = parseInt(item.price) || 0;
-        return price >= 75000;
+        return price >= 24000;
     });
 
     if (hasPremiumProduct) {
