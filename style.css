@@ -102,7 +102,7 @@ body {
    border-bottom-left-radius: 60px;
    border-bottom-right-radius: 60px;
    position: relative;
-   z-index: 50;
+   z-index: 1;
    isolation: isolate;
    /* استخدمنا mask بدلاً من overflow:hidden ليتمكن
       صندوق اقتراحات البحث من الظهور خارج حدود الهيدر */
@@ -671,7 +671,7 @@ button.btn-order { margin-bottom: 20px; }
    background: rgba(15, 17, 35, 0.72);
    backdrop-filter: blur(12px);
    -webkit-backdrop-filter: blur(12px);
-   z-index: 2000;
+   z-index: 9000000;
    justify-content: center;
    align-items: center;
    padding: 20px;
