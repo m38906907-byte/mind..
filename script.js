@@ -989,11 +989,26 @@ const teachersList = ["حيدر وليد","احمد النعيمي","محمد ا
 function showSuggestions() {
     let input = document.getElementById('userInput').value.trim();    
     let box = document.getElementById('suggestions-box');
+    let tgButton = document.getElementById('tg-join-fab');
+
+    function isMobileOrTablet() {
+        return window.matchMedia('(max-width: 1024px)').matches;
+    }
+
+    function setTelegramState(isVisible) {
+        if (!tgButton) return;
+        if (!isMobileOrTablet()) {
+            tgButton.style.display = 'inline-flex';
+            return;
+        }
+        tgButton.style.display = isVisible ? 'inline-flex' : 'none';
+    }
 
     box.innerHTML = ''; 
 
     if (input.length === 0) {
         box.style.display = 'none';
+        setTelegramState(true);
         return;
     }
 
@@ -1001,6 +1016,7 @@ function showSuggestions() {
 
     if (filtered.length > 0) {
         box.style.display = 'block';
+        setTelegramState(false);
         filtered.forEach(name => {
             let div = document.createElement('div');
             div.className = 'suggestion-item'; 
@@ -1008,12 +1024,14 @@ function showSuggestions() {
             div.onclick = function() {
                 document.getElementById('userInput').value = name;
                 box.style.display = 'none';
+                setTelegramState(true);
                 executeSearch(); 
             };
             box.appendChild(div);
         });
     } else {
         box.style.display = 'none';
+        setTelegramState(true);
     }
 }
 
