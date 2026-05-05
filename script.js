@@ -738,6 +738,7 @@ function recalculateDiscountedPrice() {
 function openModal() {
     if (cart.length === 0) return alert("السلة فارغة!"); // لا تفتح النافذة إذا لم يشترِ شيئاً
     document.getElementById('header-section').style.display = 'none'; // إخفاء الهيدر عند فتح السلة
+    document.getElementById('tg-join-fab').style.display = 'none'; // إخفاء زر التلغرام عند فتح السلة
     document.getElementById('orderModal').style.display = 'flex'; // إظهار النافذة في وسط الشاشة
     // تحويل أسماء الملازم من المصفوفة إلى نص واحد طويل مفصول بـ (+)
     renderCartChips();
@@ -747,6 +748,7 @@ function openModal() {
 function closeModal() {
     document.getElementById('orderModal').style.display = 'none'; // إخفاء النافذة تماماً
     document.getElementById('header-section').style.display = 'block'; // إظهار الهيدر عند إغلاق السلة
+    document.getElementById('tg-join-fab').style.display = 'inline-flex'; // إظهار زر التلغرام عند إغلاق السلة
 }
 
 function clearCart() {
