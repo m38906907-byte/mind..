@@ -716,7 +716,7 @@ function recalculateDiscountedPrice() {
     let booksOnlyTotal = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
     let totalDiscount = 0;
     
-    if (activeDiscountCode === "Mind2027") {
+    if (activeDiscountCode === "es8") {
         // منطق خاص لكود Mind
         cart.forEach(item => {
               if (parseInt(item.price) < 24000) {
@@ -1043,7 +1043,7 @@ let finalPriceWithDelivery = 0;
 function applyDiscount() {
     const citySelect = document.getElementById('userCity'); // جلب عنصر اختيار المحافظة
     const inputCodeElement = document.getElementById('discountCode'); // جلب عنصر إدخال الكود
-    const coupon = "Mind2027"; 
+    const coupon = "es8"; 
         
     // 1. الشرط الجديد: التحقق من أن المحافظة مختارة أولاً
     if (!citySelect || citySelect.value === "") {
