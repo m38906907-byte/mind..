@@ -667,11 +667,18 @@ else if (input.includes("علي السوداني")) {
               document.getElementById('fras-braq').scrollIntoView({behavior: 'smooth'});
           }
 
-          else if (input.includes("وقاص الطائي")) { 
+  else if (input.includes("وقاص الطائي")) { 
               resultsContainer.style.display = 'grid';
               document.getElementById('waqas-al-taii').style.display = 'contents';
 
               document.getElementById('waqas-al-taii').scrollIntoView({behavior: 'smooth'});
+          }
+
+  else if (input.includes("محمد الجنائي")) { 
+              resultsContainer.style.display = 'grid';
+              document.getElementById('mohamed-al-jenai').style.display = 'contents';
+
+              document.getElementById('mohamed-al-jenai').scrollIntoView({behavior: 'smooth'});
           }
 
       else {
@@ -1012,7 +1019,7 @@ const teachersList = ["حيدر وليد","احمد النعيمي","محمد ا
               ,"ايات العاني","نسرين البياتي","هيام الراوي","زياد الراوي","ندى جاسم","ميس وليد","محمد زياد","هشام المعموري","حمزة الجابري","نورس الموسوي","علا الصراف","مضر الجبوري","احمد فوزي","احمد حسان","احمد الجاف"
          ,"قصي النداوي","دانيار الجاف","مازن الهلالي","عمار فاضل","ساجد العكيلي","سمر علي","خالد الحيالي","نيمار ابن الانبار","ابن بابل","علي رائد","اخلاص اكرم","وليد السبع","مؤيد سليم","علي صادق","علي الذهبي","عباس العامري"
          ,"لينا احسان","مرام العلاق","علاء السعداوي","عصام الشمري","محمد علي الكناني","يوسف الربيعي","زياد ماهر","محمد العنزي","حيدر ديوان","يوسف الجعفري","عبد الوهاب عبد الكريم","محمد الواثق","صباح الدليمي","كرم عصام"
-        ,"ابراهيم الصميدعي","حسين عبد الحسين اللامي","علي الغرابي","فراس براق","وقاص الطائي"];
+        ,"ابراهيم الصميدعي","حسين عبد الحسين اللامي","علي الغرابي","فراس براق","وقاص الطائي","محمد الجنائي"];
 
 function showSuggestions() {
     let input = document.getElementById('userInput').value.trim();    
